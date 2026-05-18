@@ -1,0 +1,29 @@
+name: Download RAR
+
+on:
+  workflow_dispatch:
+
+jobs:
+  download:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Clone Repo
+        uses: actions/checkout@v4
+
+      - name: Create Folder
+        run: mkdir -p files
+
+      - name: Download RAR
+        run: |
+          curl -L "https://f84.workupload.com/download/FvVLqg5T2Dv" -o files/archive.rar
+
+      - name: Commit Files
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "actions@github.com"
+
+          git add .
+          git commit -m "Add RAR file" || echo "No changes"
+
+          git push
